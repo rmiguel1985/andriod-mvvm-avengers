@@ -1,0 +1,50 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+    ext.jacocoVersion = '0.8.5'
+    ext.dokkaVersion = '0.9.17'
+    ext.detekt_version = '1.1.1'
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$Versions.gradle"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.36.0"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
+        classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
+        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokkaVersion"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+plugins {
+    id "io.gitlab.arturbosch.detekt" version "1.1.1"
+    id "com.github.ben-manes.versions" version "0.33.0"
+}
+
+allprojects {
+    apply from: "$rootDir/detekt.gradle"
+
+    dependencies {
+        detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version"
+    }
+
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            force("org.objenesis:objenesis:2.6")
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

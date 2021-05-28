@@ -1,0 +1,13 @@
+apply plugin: 'io.gitlab.arturbosch.detekt'
+
+detekt {
+    config = files("$rootDir/default-detekt-config.yml")
+    //filters = ".*build.*,.*/resources/.*,.*/tmp/.*"
+    autoCorrect = true
+    reports {
+        html {
+            enabled = true
+            destination = file("$project.buildDir/reports/detekt/detekt-report.html")
+        }
+    }
+}

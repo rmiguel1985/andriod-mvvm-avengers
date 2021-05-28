@@ -1,0 +1,190 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'jacoco'
+    id 'org.jetbrains.dokka-android'
+    id 'kotlin-parcelize'
+}
+
+
+jacoco {
+    toolVersion = "$jacocoVersion"
+}
+
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+}
+
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = [
+            '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*',
+            'android/**/*.*', '**/*$[0-9].*', '**/ConnectivityHelper.*', '**/Constants.*',
+            '**/PreferenceHelper.*', '**/ProgressBarHelper.*','**/entities/**',
+            '**/ListAvengerRepositoryOnlyCloudPolicyImpl.*', '**/*Module*.*',
+            '**/ListAvengerRepositoryCacheWithCloudPolicyImpl.*'
+    ]
+    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
+    def mainSrc = "$project.projectDir/src/main/kotlin"
+
+    sourceDirectories.from(files([mainSrc]))
+    classDirectories.from(files([debugTree]))
+    executionData.from(fileTree(dir: project.buildDir, includes: [
+            'jacoco/testDebugUnitTest.exec', 'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'
+    ]))
+}
+
+android {
+    compileSdkVersion Versions.compileSdk
+    buildToolsVersion Versions.buildTools
+
+    defaultConfig {
+        applicationId ApplicationId.id
+        minSdkVersion Versions.minSdk
+        targetSdkVersion Versions.targetSdk
+        versionCode Releases.versionCode
+        versionName Releases.versionName
+
+        testInstrumentationRunner Testlibraries.testInstrumentationRunner
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [
+                        "room.schemaLocation"  : "$projectDir/schemas".toString(),
+                        "room.incremental"     : "true",
+                        "room.expandProjection": "true"]
+            }
+        }
+    }
+
+    sourceSets.test.resources.srcDirs += ["src/test"]
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "API_BASE_URL", "\"$debug_api_base_url\""
+            buildConfigField "String", "API_URL", "\"$debug_api_url\""
+            buildConfigField "String", "API_PORT", "\"$debug_api_port\""
+            testCoverageEnabled true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField 'String', 'API_BASE_URL', "\"$release_api_url\""
+            buildConfigField "String", "API_URL", "\"$release_api_url\""
+            buildConfigField 'String', 'API_PORT', "\"$release_api_port\""
+        }
+    }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        animationsDisabled true
+
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
+    }
+
+    dokka {
+        outputFormat = 'html'
+    }
+
+    sourceSets {
+        androidTest {
+            assets.srcDirs += ['src/androidTest/assets']
+        }
+    }
+
+    packagingOptions {
+        exclude "**/attach_hotspot_windows.dll"
+        exclude "META-INF/licenses/**"
+        exclude "META-INF/AL2.0"
+        exclude "META-INF/LGPL2.1"
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/metadata.jvm.kotlin_module'
+        exclude 'META-INF/metadata.kotlin_module'
+        exclude 'META-INF/LICENSE.md'
+        exclude 'META-INF/LICENSE-notice.md'
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation KotlinLibraries.kotlinStdLib
+    implementation AndroidLibraries.appCompat
+    implementation AndroidLibraries.coreKtx
+    implementation AndroidLibraries.constraintLayout
+    implementation AndroidLibraries.lcLivedata
+    implementation AndroidLibraries.lcRuntime
+    implementation AndroidLibraries.lcViewModel
+    implementation AndroidLibraries.material
+    testImplementation Testlibraries.junitTest
+
+    // Test
+    androidTestImplementation Testlibraries.junitExt
+    androidTestImplementation Testlibraries.espressoCore
+    androidTestImplementation Testlibraries.coroutines
+    androidTestImplementation Testlibraries.archCore
+    androidTestImplementation Testlibraries.mockk
+    androidTestImplementation Testlibraries.mockWebServer
+    androidTestImplementation Testlibraries.mocckAndroid
+    androidTestImplementation Testlibraries.koinTest
+    testImplementation Testlibraries.mockk
+    testImplementation Testlibraries.mockWebServer
+    testImplementation Testlibraries.archCore
+    testImplementation Testlibraries.coroutines
+
+    implementation Libraries.alerter
+    implementation (Libraries.timber){
+        exclude group: "org.jetbrains", module: "annotations"
+    }
+    implementation Libraries.glide
+    kapt Libraries.glideCompiler
+    implementation Libraries.startupRuntime
+    implementation Libraries.playCore
+    api Libraries.coroutines
+    api Libraries.coroutinesAndroid
+
+    implementation Libraries.koinCore
+    implementation Libraries.koinCoreExt
+    implementation Libraries.koinScope
+    implementation Libraries.koinViewModel
+    implementation Libraries.koinFragment
+
+    implementation Libraries.gson
+    implementation Libraries.retrofitGsonConverter
+    implementation Libraries.retrofit
+    implementation Libraries.retrofitInterceptor
+    implementation AndroidLibraries.room
+    implementation AndroidLibraries.roomKapt
+    implementation AndroidLibraries.roomExtensions
+
+    debugImplementation Libraries.leakCanary
+}
