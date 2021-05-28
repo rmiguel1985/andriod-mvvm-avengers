@@ -1,4 +1,4 @@
-# MvvmAvengers
+# MvvmAvengers [![Build Status](https://app.bitrise.io/app/ff3ca2386abcbe04/status.svg?token=tZ5t49pIDhAlmyIvLawNAw)](https://app.bitrise.io/app/ff3ca2386abcbe04)
 
 The purpose of this repo is to create an application that tries to 
 implement Clean Architecture principles with MVVM and architecture components in Kotlin.
