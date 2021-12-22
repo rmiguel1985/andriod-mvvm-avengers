@@ -11,7 +11,6 @@ Libraries
 =========
 
 ### Android
-* [Alerter][1]
 * [Glide][2]
 * [JetPak Lifecycle][3]
 * [Koin][4]
@@ -31,7 +30,6 @@ Libraries
 * [Timber][14]
 * [LeakCanary][15]
 
-[1]: https://github.com/Tapadoo/Alerter
 [2]: https://github.com/bumptech/glide
 [3]: https://developer.android.com/jetpack/androidx/releases/lifecycle
 [4]: https://insert-koin.io/

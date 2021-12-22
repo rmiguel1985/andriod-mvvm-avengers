@@ -2,7 +2,7 @@
 buildscript {
     ext.jacocoVersion = '0.8.5'
     ext.dokkaVersion = '0.9.17'
-    ext.detekt_version = '1.1.1'
+    ext.detekt_version = '1.19.0'
     repositories {
         google()
         mavenCentral()
