@@ -9,12 +9,10 @@ import com.example.mvvmavengers.utils.ConnectivityHelper
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.io.IOException
-
 
 @ExperimentalCoroutinesApi
 class ListAvengerRepositoryCloudWithCachePolicyImplTest {
@@ -36,38 +34,34 @@ class ListAvengerRepositoryCloudWithCachePolicyImplTest {
                 listAvengerCloudDataSourceImpl, listAvengerDiskDataSource)
     }
 
-    @After
-    fun tearDown() {
-    }
-
     @Test
     fun getAvengersList_without_connectivity_calls_disk_data_source() = runBlockingTest {
-        //Given
+        // Given
         coEvery { listAvengerDiskDataSource.getAvengersList() } returns ResultAvenger.Error(
             Exception("Error")
         )
         every { ConnectivityHelper.isOnline } returns (false)
 
-        //When
+        // When
         listAvengerRepositoryCloudWithCachePolicyImpl.getAvengersList()
 
-        //Then
+        // Then
         coVerify { listAvengerDiskDataSource.getAvengersList() }
     }
 
     @Test
     @Throws(IOException::class)
     fun getAvengersList_with_connectivity_calls_cloud_data_source() = runBlockingTest {
-        //Given
+        // Given
         coEvery { listAvengerCloudDataSourceImpl.getAvengersList() } returns ResultAvenger.Error(
             Exception("Error")
         )
         every { ConnectivityHelper.isOnline } returns (true)
 
-        //When
+        // When
         listAvengerRepositoryCloudWithCachePolicyImpl.getAvengersList()
 
-        //Then
+        // Then
         coVerify { listAvengerCloudDataSourceImpl.getAvengersList() }
     }
 }

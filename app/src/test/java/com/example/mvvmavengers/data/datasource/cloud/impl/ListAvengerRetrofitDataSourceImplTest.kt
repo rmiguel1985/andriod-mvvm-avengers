@@ -58,26 +58,25 @@ class ListAvengerRetrofitDataSourceImplTest {
     @Throws(Exception::class)
     fun getAvengersList_with_cloud_on_successful_response_returns_and_saves_expected_json() = runBlocking {
 
-        //Given
+        // Given
         mockWebServer.enqueue(
             MockResponse()
                 .setBody(readAsset("json/avengers_list.json"))
         )
 
-        //When
+        // When
         val avengersList = listAvengerRetrofitDataSourceImpl.getAvengersList()
 
-        //Then
+        // Then
         assertNotNull(avengersList)
         assertTrue(avengersList is ResultAvenger.Success)
         assertEquals(2, avengersList.data?.data?.results?.size)
-        assertEquals("3-D Man",avengersList.data?.data?.results?.get(0)?.name)
+        assertEquals("3-D Man", avengersList.data?.data?.results?.get(0)?.name)
     }
-
 
     @Test
     fun getAvengersList_with_cloud_on_successful_response_with_malformed_json() = runBlocking {
-        //Given
+        // Given
         mockWebServer.enqueue(
             MockResponse()
                 .addHeader("Content-Type", "application/json; charset=utf-8")
@@ -85,23 +84,23 @@ class ListAvengerRetrofitDataSourceImplTest {
                 .setBody(readAsset("json/malformed_avengers_list.json"))
         )
 
-        //When
+        // When
         val avengersList = listAvengerRetrofitDataSourceImpl.getAvengersList()
 
-        //Then
+        // Then
         assertTrue(avengersList is ResultAvenger.Error)
         assertEquals(avengersList.errorMessage, "not found")
     }
 
     @Test
     fun getAvengersList_with_cloud_on_unsuccessful_response() = runBlocking {
-        //Given
+        // Given
         mockWebServer.enqueue(MockResponse().setSocketPolicy(SocketPolicy.NO_RESPONSE))
 
-        //When
-        val avengersList =listAvengerRetrofitDataSourceImpl.getAvengersList()
+        // When
+        val avengersList = listAvengerRetrofitDataSourceImpl.getAvengersList()
 
-        //Then
+        // Then
         assertTrue(avengersList is ResultAvenger.Error)
         assertEquals(avengersList.errorMessage, "not found")
     }
