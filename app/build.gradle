@@ -93,6 +93,19 @@ android {
     testOptions {
         animationsDisabled true
 
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging true
+            }
+        }
+
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+                excludes = ['jdk.internal.*']       //This line
+            }
+        }
+
         unitTests {
             includeAndroidResources = true
         }
@@ -161,14 +174,12 @@ dependencies {
     testImplementation Testlibraries.archCore
     testImplementation Testlibraries.coroutines
 
-    implementation Libraries.alerter
     implementation (Libraries.timber){
         exclude group: "org.jetbrains", module: "annotations"
     }
     implementation Libraries.glide
     kapt Libraries.glideCompiler
     implementation Libraries.startupRuntime
-    implementation Libraries.playCore
     api Libraries.coroutines
     api Libraries.coroutinesAndroid
 
@@ -176,15 +187,16 @@ dependencies {
     implementation Libraries.koinCoreExt
     implementation Libraries.koinScope
     implementation Libraries.koinViewModel
-    implementation Libraries.koinFragment
 
     implementation Libraries.gson
     implementation Libraries.retrofitGsonConverter
     implementation Libraries.retrofit
     implementation Libraries.retrofitInterceptor
     implementation AndroidLibraries.room
-    implementation AndroidLibraries.roomKapt
+    kapt AndroidLibraries.roomKapt
     implementation AndroidLibraries.roomExtensions
 
     debugImplementation Libraries.leakCanary
+
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 }
