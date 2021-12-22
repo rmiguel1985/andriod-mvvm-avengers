@@ -30,7 +30,9 @@
                 android:value="androidx.startup" />
         </provider>
 
-        <activity android:name="com.example.mvvmavengers.features.avengerslist.ui.MainActivity">
+        <activity android:name="com.example.mvvmavengers.features.avengerslist.ui.MainActivity"
+                tools:node="merge"
+                android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
