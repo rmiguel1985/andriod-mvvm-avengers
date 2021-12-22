@@ -60,17 +60,19 @@ class MainActivity : BaseActivity() {
     }
 
     private fun createAvengersListAdapter() {
-        binding.avengerListRecyclerview.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        binding.avengerListRecyclerview.itemAnimator = DefaultItemAnimator()
-        binding.avengerListRecyclerview.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-        binding.avengerListRecyclerview.adapter = adapter
+        binding.avengerListRecyclerview.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            itemAnimator = DefaultItemAnimator()
+            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+            adapter = adapter
+        }
     }
 
     private fun onAvengerListItemClicked(avengerModel: Result?) {
         avengerModel?.let {
             Timber.d("avenger name: %s", it.name)
             val intent = Intent(applicationContext, AvengerDetailActivity::class.java)
-            val imageUrl = it.thumbnail?.path + "." + it.thumbnail?.extension
+            val imageUrl = it.thumbnail?.path.plus(".").plus(it.thumbnail?.extension)
 
             intent.putExtra(AVENGER_KEY, Avenger(
                 (it.name.orEmpty()),
