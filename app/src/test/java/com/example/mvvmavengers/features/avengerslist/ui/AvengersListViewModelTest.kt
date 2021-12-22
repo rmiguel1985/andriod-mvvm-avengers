@@ -7,10 +7,11 @@ import com.example.mvvmavengers.features.avengerslist.data.repository.impl.ListA
 import com.example.mvvmavengers.features.avengerslist.domain.LoadAvengersListUseCaseImpl
 import com.example.mvvmavengers.features.avengerslist.domain.entities.AvengersModel
 import com.example.mvvmavengers.features.avengerslist.domain.entities.Data
+import com.example.mvvmavengers.utils.LifeCycleTestOwner
+import com.example.mvvmavengers.utils.MainCoroutineRule
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.test.runBlockingTest
@@ -19,16 +20,17 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-import org.junit.rules.TestRule
-
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 class AvengersListViewModelTest {
 
+    // Set the main coroutines dispatcher for unit testing.
     @get:Rule
-    val coroutineTestRule = CoroutineTestRule()
+    val coroutineRule = MainCoroutineRule()
+
+    // Executes each task synchronously using Architecture Components.
     @get:Rule
-    var rule: TestRule = InstantTaskExecutorRule()
+    var instantExecutorRule = InstantTaskExecutorRule()
 
     private val stateObserver: Observer<ResultAvenger<AvengersModel>> = mockk(relaxed = true)
     private val loadAvengersRepository = mockk<ListAvengersRepositoryImpl>(relaxed = true)
@@ -50,46 +52,42 @@ class AvengersListViewModelTest {
     }
 
     @Test
-    fun getAvengersOnSuccessResponse() {
-        coroutineTestRule.testDispatcher.runBlockingTest {
-            // Given
-            lifeCycleTestOwner.onResume()
+    fun getAvengersOnSuccessResponse() = coroutineRule.runBlockingTest {
+        // Given
+        lifeCycleTestOwner.onResume()
 
-            val avengersModel = AvengersModel()
-            val data = Data()
-            val result = com.example.mvvmavengers.features.avengerslist.domain.entities.Result()
-            val avengersList = ArrayList<com.example.mvvmavengers.features.avengerslist.domain.entities.Result>()
+        val avengersModel = AvengersModel()
+        val data = Data()
+        val result = com.example.mvvmavengers.features.avengerslist.domain.entities.Result()
+        val avengersList = ArrayList<com.example.mvvmavengers.features.avengerslist.domain.entities.Result>()
 
-            result.name = "3-D Man"
-            result.description = "some description"
-            avengersList.add(result)
+        result.name = "3-D Man"
+        result.description = "some description"
+        avengersList.add(result)
 
-            data.results = avengersList
-            avengersModel.data = data
+        data.results = avengersList
+        avengersModel.data = data
 
-            coEvery { loadAvengersRepository.avengersList() } returns ResultAvenger.Success(avengersModel)
+        coEvery { loadAvengersRepository.avengersList() } returns ResultAvenger.Success(avengersModel)
 
-            // When
-            avengersListViewModel.getAvengers()
+        // When
+        avengersListViewModel.getAvengers()
 
-            // Then
-            coVerify {stateObserver.onChanged(ResultAvenger.Success(avengersModel)) }
-        }
+        // Then
+        coVerify { stateObserver.onChanged(ResultAvenger.Success(avengersModel)) }
     }
 
     @Test
-    fun getAvengersOnErrorResponse() {
-        coroutineTestRule.testDispatcher.runBlockingTest {
-            // Given
-            val avengerException = ResultAvenger.Error(Exception("not found"))
-            lifeCycleTestOwner.onResume()
-            coEvery { loadAvengersRepository.avengersList() } returns avengerException
+    fun getAvengersOnErrorResponse() = coroutineRule.runBlockingTest {
+        // Given
+        val avengerException = ResultAvenger.Error(Exception("not found"))
+        lifeCycleTestOwner.onResume()
+        coEvery { loadAvengersRepository.avengersList() } returns avengerException
 
-            // When
-            avengersListViewModel.getAvengers()
+        // When
+        avengersListViewModel.getAvengers()
 
-            // Then
-            coVerify {stateObserver.onChanged(avengerException) }
-        }
+        // Then
+        coVerify { stateObserver.onChanged(avengerException) }
     }
 }

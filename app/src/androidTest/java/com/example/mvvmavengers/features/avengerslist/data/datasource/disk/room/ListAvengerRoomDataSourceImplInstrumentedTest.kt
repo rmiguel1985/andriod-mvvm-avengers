@@ -1,4 +1,4 @@
-package com.example.mvvmavengers
+package com.example.mvvmavengers.features.avengerslist.data.datasource.disk.room
 
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -7,7 +7,6 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.mvvmavengers.features.avengerslist.data.datasource.cloud.impl.ListAvengerRetrofitDataSourceImpl
 import com.example.mvvmavengers.features.avengerslist.data.datasource.disk.ListAvengerDiskDataSource
-import com.example.mvvmavengers.features.avengerslist.data.datasource.disk.room.ListAvengerRoomDataSourceImpl
 import com.example.mvvmavengers.features.avengerslist.data.datasource.disk.room.schema.AppDatabase
 import com.example.mvvmavengers.features.avengerslist.data.policy.ListAvengerRepositoryPolicy
 import com.example.mvvmavengers.features.avengerslist.data.policy.impl.ListAvengerRepositoryCloudWithCachePolicyImpl
@@ -17,6 +16,7 @@ import io.mockk.every
 import io.mockk.mockkObject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -39,10 +39,7 @@ import java.io.IOException
 class ListAvengerRoomDataSourceImplInstrumentedTest {
 
     @get:Rule
-    val rule = InstantTaskExecutorRule()
-
-    @get:Rule
-    val coroutinesTestRule = CoroutinesTestRuleAndroid()
+    var instantExecutorRule = InstantTaskExecutorRule()
 
     private var context: Context? = null
     private lateinit var appDatabase: AppDatabase
@@ -57,7 +54,6 @@ class ListAvengerRoomDataSourceImplInstrumentedTest {
         gson = Gson()
         mockWebServer = MockWebServer()
         mockWebServer.start()
-        mockWebServer = MockWebServer()
         context = InstrumentationRegistry.getInstrumentation().context
         appDatabase = Room.inMemoryDatabaseBuilder(context!!,
                 AppDatabase::class.java).build()
@@ -86,7 +82,7 @@ class ListAvengerRoomDataSourceImplInstrumentedTest {
     }
 
     @Test
-    fun getAvengersList_on_empty_database_returns_null() = runBlocking {
+    fun getAvengersList_on_empty_database_returns_null() = runBlockingTest {
         //Given
         every { ConnectivityHelper.isOnline } returns (false)
 
@@ -101,18 +97,18 @@ class ListAvengerRoomDataSourceImplInstrumentedTest {
     @Test
     fun getAvengersList_with_saved_cached_data_returns_expected_value() = runBlocking {
         //Given
+        every { ConnectivityHelper.isOnline } returns (true)
+        mockWebServer.enqueue(
+            MockResponse()
+                .setBody(readAsset("json/avengers_list.json"))
+        )
 
-            every { ConnectivityHelper.isOnline} returns (true)
-            mockWebServer.enqueue(
-                    MockResponse()
-                            .setBody(readAsset("json/avengers_list.json")))
 
+        //When
+        cloudWithCachePolicyImpl.getAvengersList()
 
-            //When
-            cloudWithCachePolicyImpl.getAvengersList()
-
-            //Then
-            assertFalse(appDatabase.listAvengerDao().getAll().isEmpty())
+        //Then
+        assertFalse(appDatabase.listAvengerDao().getAll().isEmpty())
 
 
     }

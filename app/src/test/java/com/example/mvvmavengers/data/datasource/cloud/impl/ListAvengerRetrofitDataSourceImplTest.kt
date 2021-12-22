@@ -1,7 +1,6 @@
 package com.example.mvvmavengers.data.datasource.cloud.impl
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.example.mvvmavengers.CoroutinesTestRule
 import com.example.mvvmavengers.base.usecase.ResultAvenger
 import com.example.mvvmavengers.base.usecase.data
 import com.example.mvvmavengers.base.usecase.errorMessage
@@ -28,9 +27,6 @@ class ListAvengerRetrofitDataSourceImplTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
-
-    @get:Rule
-    val coroutinesTestRule = CoroutinesTestRule()
 
     private lateinit var mockWebServer: MockWebServer
     private lateinit var listAvengerRetrofitDataSourceImpl: ListAvengerRetrofitDataSourceImpl

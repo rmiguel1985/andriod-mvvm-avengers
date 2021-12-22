@@ -1,4 +1,4 @@
-package com.example.mvvmavengers.features.avengerslist.ui
+package com.example.mvvmavengers.utils
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
