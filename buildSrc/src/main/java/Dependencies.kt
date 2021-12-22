@@ -10,14 +10,14 @@ object Releases {
 
 object Versions {
     const val kotlin = "1.4.21"
-    const val gradle = "4.2.1"
-    const val compileSdk = 30
+    const val gradle = "7.0.4"
+    const val compileSdk = 31
     const val buildTools = "30.0.2"
     const val minSdk = 23
-    const val targetSdk = 30
+    const val targetSdk = 31
 
     // Android Libraries
-    const val appCompat = "1.2.0"
+    const val appCompat = "1.4.0"
     const val coreKtx = "1.3.2"
     const val dataStoreVersion = "1.0.0-alpha06"
     const val lifeCycleVersion = "2.2.0"
@@ -28,25 +28,23 @@ object Versions {
 
     // Test Libraries
     const val testRunner = "1.0.2"
-    const val espressoCoreVersion = "3.3.0"
+    const val espressoCoreVersion = "3.4.0"
     const val kotlinTestVersion = "3.3.2"
-    const val junitVersion = "4.13"
-    const val junitExtVersion = "1.1.2"
+    const val junitVersion = "4.13.2"
+    const val junitExtVersion = "1.1.3"
     const val mockkVersion = "1.11.0"
     const val archCoreVersion = "2.1.0"
     const val mockWebServerVersion = "4.9.0"
 
     // Third Party libraries
-    const val alerterVersion = "7.1.0"
-    const val leakCanaryVersion = "2.5"
+    const val leakCanaryVersion = "2.7"
     const val timberVersion = "4.7.1"
-    const val glideVersion = "4.11.0"
+    const val glideVersion = "4.12.0"
     const val startupRuntime = "1.0.0"
-    const val playCoreVersion = "1.8.0"
     const val koinVersion = "2.2.2"
-    const val coroutinesVersion = "1.3.9"
+    const val coroutinesVersion = "1.4.2"
     const val roomVersion = "2.2.6"
-    const val gsonVersion = "2.8.6"
+    const val gsonVersion = "2.8.8"
     const val retrofitGsonVersion = "2.9.0"
     const val retrofitVersion = "2.9.0"
     const val okhttpVersion = "4.9.0"
@@ -57,18 +55,15 @@ object KotlinLibraries {
 }
 
 object Libraries {
-    const val alerter = "com.github.tapadoo:alerter:${Versions.alerterVersion}"
     const val leakCanary = "com.squareup.leakcanary:leakcanary-android:${Versions.leakCanaryVersion}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timberVersion}"
     const val glide = "com.github.bumptech.glide:glide:${Versions.glideVersion}"
     const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glideVersion}"
     const val startupRuntime = "androidx.startup:startup-runtime:${Versions.startupRuntime}"
-    const val playCore = "com.google.android.play:core:${Versions.playCoreVersion}"
     const val koinCore = "io.insert-koin:koin-core:${Versions.koinVersion}"
     const val koinCoreExt = "io.insert-koin:koin-core-ext:${Versions.koinVersion}"
     const val koinScope = "io.insert-koin:koin-androidx-scope:${Versions.koinVersion}"
     const val koinViewModel = "io.insert-koin:koin-androidx-viewmodel:${Versions.koinVersion}"
-    const val koinFragment = "io.insert-koin:koin-androidx-fragment:${Versions.koinVersion}" // (unstable version)
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutinesVersion}"
     const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutinesVersion}"
     const val gson = "com.google.code.gson:gson:${Versions.gsonVersion}"
