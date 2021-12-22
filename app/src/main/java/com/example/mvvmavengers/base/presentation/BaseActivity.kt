@@ -2,11 +2,16 @@ package com.example.mvvmavengers.base.presentation
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_COMPACT
+import com.example.mvvmavengers.R
 import com.example.mvvmavengers.utils.ProgressBarHelper
-import com.tapadoo.alerter.Alerter
-
-const val ALERT_DURATION: Long = 2000
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * BaseActivity Class
@@ -38,12 +43,19 @@ abstract class BaseActivity : AppCompatActivity() {
     fun showMessage(stringId: Int) = showMessage(getString(stringId))
 
     private fun showAlert(message: String, title: String, color: Int) {
-        Alerter.create(this)
-                .setTitle(title)
-                .setText(message)
-                .hideIcon()
-                .setDuration(ALERT_DURATION)
-                .setBackgroundColorInt(color)
-                .show()
+        val snackBar = Snackbar.make(this.findViewById(android.R.id.content),
+            HtmlCompat.fromHtml(title.plus("<br/>").plus(message), FROM_HTML_MODE_COMPACT),
+            Snackbar.LENGTH_LONG)
+
+        snackBar.view.apply {
+            val params = (layoutParams as FrameLayout.LayoutParams)
+            params.gravity = Gravity.TOP
+            layoutParams = params
+        }
+
+        snackBar.animationMode = BaseTransientBottomBar.ANIMATION_MODE_FADE
+        snackBar.setBackgroundTint(color)
+        snackBar.anchorView = supportActionBar?.customView
+        snackBar.show()
     }
 }
