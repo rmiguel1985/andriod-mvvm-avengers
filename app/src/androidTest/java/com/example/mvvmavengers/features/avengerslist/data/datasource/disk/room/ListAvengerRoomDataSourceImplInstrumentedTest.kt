@@ -5,6 +5,8 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
+import com.example.mvvmavengers.base.usecase.ResultAvenger
+import com.example.mvvmavengers.base.usecase.data
 import com.example.mvvmavengers.features.avengerslist.data.datasource.cloud.impl.ListAvengerRetrofitDataSourceImpl
 import com.example.mvvmavengers.features.avengerslist.data.datasource.disk.ListAvengerDiskDataSource
 import com.example.mvvmavengers.features.avengerslist.data.datasource.disk.room.schema.AppDatabase
@@ -14,6 +16,7 @@ import com.example.mvvmavengers.utils.ConnectivityHelper
 import com.google.gson.Gson
 import io.mockk.every
 import io.mockk.mockkObject
+import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
@@ -95,7 +98,7 @@ class ListAvengerRoomDataSourceImplInstrumentedTest {
     }
 
     @Test
-    fun getAvengersList_with_saved_cached_data_returns_expected_value() = runBlocking {
+    fun getAvengersList_with_succes_data_from_cloud_saves_it() = runBlocking {
         //Given
         every { ConnectivityHelper.isOnline } returns (true)
         mockWebServer.enqueue(
@@ -103,14 +106,32 @@ class ListAvengerRoomDataSourceImplInstrumentedTest {
                 .setBody(readAsset("json/avengers_list.json"))
         )
 
-
         //When
         cloudWithCachePolicyImpl.getAvengersList()
 
         //Then
         assertFalse(appDatabase.listAvengerDao().getAll().isEmpty())
+    }
 
+    @Test
+    fun getAvengersList_with_saved_cached_data_returns_expected_values() = runBlocking {
+        //Given
+        every { ConnectivityHelper.isOnline } returns (true)
+        mockWebServer.enqueue(
+            MockResponse()
+                .setBody(readAsset("json/avengers_list.json"))
+        )
 
+        //When
+        cloudWithCachePolicyImpl.getAvengersList()
+        every { ConnectivityHelper.isOnline } returns (false)
+        val avengersList = cloudWithCachePolicyImpl.getAvengersList()
+
+        //Then
+        TestCase.assertNotNull(avengersList)
+        TestCase.assertTrue(avengersList is ResultAvenger.Success)
+        TestCase.assertEquals(2, avengersList.data?.data?.results?.size)
+        TestCase.assertEquals("3-D Man", avengersList.data?.data?.results?.get(0)?.name)
     }
 
     /**

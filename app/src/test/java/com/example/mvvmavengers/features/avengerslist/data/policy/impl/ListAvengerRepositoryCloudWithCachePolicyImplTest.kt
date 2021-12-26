@@ -1,10 +1,9 @@
-package com.example.mvvmavengers.data.policy.impl
+package com.example.mvvmavengers.features.avengerslist.data.policy.impl
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.mvvmavengers.base.usecase.ResultAvenger
 import com.example.mvvmavengers.features.avengerslist.data.datasource.cloud.impl.ListAvengerRetrofitDataSourceImpl
 import com.example.mvvmavengers.features.avengerslist.data.datasource.disk.room.ListAvengerRoomDataSourceImpl
-import com.example.mvvmavengers.features.avengerslist.data.policy.impl.ListAvengerRepositoryCloudWithCachePolicyImpl
 import com.example.mvvmavengers.utils.ConnectivityHelper
 import io.mockk.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi

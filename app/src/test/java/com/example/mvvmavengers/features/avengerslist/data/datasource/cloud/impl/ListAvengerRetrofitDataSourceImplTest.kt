@@ -1,11 +1,11 @@
-package com.example.mvvmavengers.data.datasource.cloud.impl
+package com.example.mvvmavengers.features.avengerslist.data.datasource.cloud.impl
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.mvvmavengers.base.usecase.ResultAvenger
 import com.example.mvvmavengers.base.usecase.data
 import com.example.mvvmavengers.base.usecase.errorMessage
-import com.example.mvvmavengers.features.avengerslist.data.datasource.cloud.impl.ListAvengerRetrofitDataSourceImpl
 import com.google.gson.Gson
+import junit.framework.TestCase.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -13,7 +13,6 @@ import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import okhttp3.mockwebserver.SocketPolicy
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -57,7 +56,6 @@ class ListAvengerRetrofitDataSourceImplTest {
     @Test
     @Throws(Exception::class)
     fun getAvengersList_with_cloud_on_successful_response_returns_and_saves_expected_json() = runBlocking {
-
         // Given
         mockWebServer.enqueue(
             MockResponse()
