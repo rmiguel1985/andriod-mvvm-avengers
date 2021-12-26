@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mvvmavengers.features.avengerslist.domain.entities.Avenger
-import com.example.mvvmavengers.features.avengerslist.domain.entities.AvengersModel
-import com.example.mvvmavengers.features.avengerslist.domain.entities.Result
 import com.example.mvvmavengers.base.presentation.BaseActivity
 import com.example.mvvmavengers.base.usecase.ResultAvenger
 import com.example.mvvmavengers.databinding.ActivityMainBinding
 import com.example.mvvmavengers.features.avengerdetail.AvengerDetailActivity
+import com.example.mvvmavengers.features.avengerslist.domain.entities.Avenger
+import com.example.mvvmavengers.features.avengerslist.domain.entities.AvengersModel
+import com.example.mvvmavengers.features.avengerslist.domain.entities.Result
 import com.example.mvvmavengers.features.avengerslist.ui.adapter.AvengersListAdapter
 import com.example.mvvmavengers.utils.Constants.AVENGER_KEY
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,16 +41,16 @@ class MainActivity : BaseActivity() {
         })
     }
 
-    private fun manageState(it: ResultAvenger<AvengersModel?>?) {
-        when (it) {
+    private fun manageState(resultAvenger: ResultAvenger<AvengersModel?>?) {
+        when (resultAvenger) {
             is ResultAvenger.Success -> {
                 hideProgress()
-                it.data?.data?.results?.let { it1 -> adapter.avengers = it1 }
+                resultAvenger.data?.data?.results?.let { avengersList -> adapter.avengers = avengersList }
             }
 
             is ResultAvenger.Error -> {
                 hideProgress()
-                showError(it.exception.toString())
+                showError(resultAvenger.exception.toString())
             }
 
             is ResultAvenger.Loading -> {
@@ -64,7 +64,7 @@ class MainActivity : BaseActivity() {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             itemAnimator = DefaultItemAnimator()
             addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
-            adapter = adapter
+            adapter = this@MainActivity.adapter
         }
     }
 

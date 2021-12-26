@@ -8,5 +8,5 @@ import org.koin.dsl.module
 @InternalCoroutinesApi
 @kotlinx.coroutines.ExperimentalCoroutinesApi
 val ListAvengerViewModelModule = module {
-    viewModel { AvengersListViewModel(get()) }
+    viewModel { AvengersListViewModel(loadAvengersListUseCaseImpl = get()) }
 }

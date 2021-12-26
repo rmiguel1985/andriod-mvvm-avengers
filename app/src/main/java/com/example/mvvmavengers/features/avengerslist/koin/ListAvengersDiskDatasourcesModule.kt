@@ -5,5 +5,5 @@ import com.example.mvvmavengers.features.avengerslist.data.datasource.disk.room.
 import org.koin.dsl.module
 
 val ListAvengersDiskDatasourcesModule = module {
-    single<ListAvengerDiskDataSource> { ListAvengerRoomDataSourceImpl(get()) }
+    single<ListAvengerDiskDataSource> { ListAvengerRoomDataSourceImpl(roomDao = get()) }
 }

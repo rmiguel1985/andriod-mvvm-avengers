@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 @kotlinx.coroutines.ExperimentalCoroutinesApi
 val ListAvengersCloudDataSourceModule = module(override = true) {
-    single<ListAvengerCloudDataSource> { ListAvengerRetrofitDataSourceImpl(get()) }
+    single<ListAvengerCloudDataSource> { ListAvengerRetrofitDataSourceImpl(retrofitInstance = get()) }
 }

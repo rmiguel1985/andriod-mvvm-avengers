@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
 val ListAvengerRepositoryModule = module(override = true) {
-    single<ListAvengersRepository> { ListAvengersRepositoryImpl(get()) }
+    single<ListAvengersRepository> { ListAvengersRepositoryImpl(listAvengerRepositoryPolicy = get()) }
 }

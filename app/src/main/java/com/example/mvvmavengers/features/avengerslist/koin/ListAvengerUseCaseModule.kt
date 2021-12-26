@@ -6,5 +6,5 @@ import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
 val ListAvengerUseCaseModule = module {
-    single { LoadAvengersListUseCaseImpl(get()) }
+    single { LoadAvengersListUseCaseImpl(listAvengerRepository = get()) }
 }
