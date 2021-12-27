@@ -3,7 +3,6 @@ package com.example.mvvmavengers.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import org.koin.core.component.KoinApiExtension
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -12,7 +11,6 @@ import org.koin.core.component.inject
  *
  * Check device's network connectivity
  */
-@KoinApiExtension
 object ConnectivityHelper : KoinComponent {
 
     private val context by inject<Context>()

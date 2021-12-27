@@ -6,7 +6,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
-val ListAvengerPoliciesModule = module(override = true) {
+val ListAvengerPoliciesModule = module {
     single<ListAvengerRepositoryPolicy> {
         ListAvengerRepositoryCloudWithCachePolicyImpl(listAvengerCloudDataSource = get(), listAvengerDiskDataSource = get())
     }

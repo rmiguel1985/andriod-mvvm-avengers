@@ -6,6 +6,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.dsl.module
 
 @ExperimentalCoroutinesApi
-val ListAvengerRepositoryModule = module(override = true) {
+val ListAvengerRepositoryModule = module {
     single<ListAvengersRepository> { ListAvengersRepositoryImpl(listAvengerRepositoryPolicy = get()) }
 }

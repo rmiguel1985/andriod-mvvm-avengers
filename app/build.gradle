@@ -86,8 +86,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 
     testOptions {
@@ -178,25 +178,33 @@ dependencies {
     implementation (Libraries.timber){
         exclude group: "org.jetbrains", module: "annotations"
     }
+
+    // Glide
     implementation Libraries.glide
     kapt Libraries.glideCompiler
+
+    // Startup
     implementation Libraries.startupRuntime
+
+    // Coroutines
     api Libraries.coroutines
     api Libraries.coroutinesAndroid
 
-    implementation Libraries.koinCore
-    implementation Libraries.koinCoreExt
-    implementation Libraries.koinScope
-    implementation Libraries.koinViewModel
+    // koin
+    implementation Libraries.koinAndroid
 
+    // Retrofit
     implementation Libraries.gson
     implementation Libraries.retrofitGsonConverter
     implementation Libraries.retrofit
     implementation Libraries.retrofitInterceptor
+
+    // Room
     implementation AndroidLibraries.room
     kapt AndroidLibraries.roomKapt
     implementation AndroidLibraries.roomExtensions
 
+    // LeakCanary
     debugImplementation Libraries.leakCanary
 
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'

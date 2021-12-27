@@ -5,6 +5,6 @@ import com.example.mvvmavengers.features.avengerslist.data.datasource.cloud.impl
 import org.koin.dsl.module
 
 @kotlinx.coroutines.ExperimentalCoroutinesApi
-val ListAvengersCloudDataSourceModule = module(override = true) {
+val ListAvengersCloudDataSourceModule = module {
     single<ListAvengerCloudDataSource> { ListAvengerRetrofitDataSourceImpl(retrofitInstance = get()) }
 }

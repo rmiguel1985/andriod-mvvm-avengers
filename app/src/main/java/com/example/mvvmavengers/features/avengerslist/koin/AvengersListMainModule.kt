@@ -11,5 +11,5 @@ val avengersListMainModule = listOf(
         ListAvengerRepositoryModule,
         ListAvengersCloudDataSourceModule,
         ListAvengerUseCaseModule,
-        ListAvengersDiskDatasourcesModule
+        ListAvengersDiskDataSourceModule
 )
