@@ -54,7 +54,7 @@ class AvengersListViewModelTest {
     }
 
     @Test
-    fun getAvengersOnSuccessResponse() = coroutineRule.runBlockingTest {
+    fun `get expected avengers model on success response`() = coroutineRule.runBlockingTest {
         // Given
         lifeCycleTestOwner.onResume()
 
@@ -80,7 +80,7 @@ class AvengersListViewModelTest {
     }
 
     @Test
-    fun getAvengersOnErrorResponse() = coroutineRule.runBlockingTest {
+    fun `get expected avenger exception on error response`() = coroutineRule.runBlockingTest {
         // Given
         val avengerException = ResultAvenger.Error(Exception("not found"))
         lifeCycleTestOwner.onResume()

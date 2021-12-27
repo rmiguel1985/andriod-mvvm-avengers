@@ -34,7 +34,7 @@ class ListAvengerRepositoryCloudWithCachePolicyImplTest {
     }
 
     @Test
-    fun getAvengersList_without_connectivity_calls_disk_data_source() = runBlockingTest {
+    fun `getAvengersList without connectivity calls disk data source`() = runBlockingTest {
         // Given
         coEvery { listAvengerDiskDataSource.getAvengersList() } returns ResultAvenger.Error(
             Exception("Error")
@@ -50,7 +50,7 @@ class ListAvengerRepositoryCloudWithCachePolicyImplTest {
 
     @Test
     @Throws(IOException::class)
-    fun getAvengersList_with_connectivity_calls_cloud_data_source() = runBlockingTest {
+    fun `getAvengersList with connectivity calls cloud data source`() = runBlockingTest {
         // Given
         coEvery { listAvengerCloudDataSourceImpl.getAvengersList() } returns ResultAvenger.Error(
             Exception("Error")

@@ -55,7 +55,7 @@ class ListAvengerRetrofitDataSourceImplTest {
 
     @Test
     @Throws(Exception::class)
-    fun getAvengersList_with_cloud_on_successful_response_returns_and_saves_expected_json() = runBlocking {
+    fun `getAvengersList with successful cloud response returns and saves expected json`() = runBlocking {
         // Given
         mockWebServer.enqueue(
             MockResponse()
@@ -73,7 +73,7 @@ class ListAvengerRetrofitDataSourceImplTest {
     }
 
     @Test
-    fun getAvengersList_with_cloud_on_successful_response_with_malformed_json() = runBlocking {
+    fun `getAvengersList with cloud on successful response with malformed json`() = runBlocking {
         // Given
         mockWebServer.enqueue(
             MockResponse()
@@ -91,7 +91,7 @@ class ListAvengerRetrofitDataSourceImplTest {
     }
 
     @Test
-    fun getAvengersList_with_cloud_on_unsuccessful_response() = runBlocking {
+    fun `getAvengersList with cloud on unsuccessful response`() = runBlocking {
         // Given
         mockWebServer.enqueue(MockResponse().setSocketPolicy(SocketPolicy.NO_RESPONSE))
 
