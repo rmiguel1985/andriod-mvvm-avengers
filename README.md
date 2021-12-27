@@ -115,7 +115,7 @@ With the command:
 ```gradle
 ./gradlew detekt
 ```
-Analysis will be executed and report generated at ** $rootProjectDir/app/build/reports/detekt/detekt.html**  
+Analysis will be executed and report generated at **$rootProjectDir/app/build/reports/detekt/detekt.html**
   
 
 License
