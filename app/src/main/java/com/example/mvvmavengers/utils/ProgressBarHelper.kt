@@ -7,27 +7,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import java.lang.ref.WeakReference
 
 /**
  * Helper class to manage ProgressBar state
  */
 object ProgressBarHelper {
-    private var progressBar: ProgressBar? = null
+    private var progressBar: WeakReference<ProgressBar>? = null
 
     fun progressBarHandler(context: Context) {
+
         val layout = (context as Activity).findViewById<View>(android.R.id.content)
             .rootView as ViewGroup
 
-        progressBar = ProgressBar(context, null, android.R.attr.progressBarStyleLarge)
-        progressBar?.isIndeterminate = true
+        progressBar = WeakReference(ProgressBar(context, null, android.R.attr.progressBarStyleLarge))
+        progressBar?.get()?.isIndeterminate = true
 
-        val params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,
-            RelativeLayout.LayoutParams.MATCH_PARENT)
+        val params = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.MATCH_PARENT,
+            RelativeLayout.LayoutParams.MATCH_PARENT
+        )
 
         val relativeLayout = RelativeLayout(context)
 
         relativeLayout.gravity = Gravity.CENTER
-        relativeLayout.addView(progressBar)
+        relativeLayout.addView(progressBar?.get())
 
         layout.addView(relativeLayout, params)
 
@@ -35,10 +39,10 @@ object ProgressBarHelper {
     }
 
     fun show() {
-        progressBar?.visibility = View.VISIBLE
+        progressBar?.get()?.visibility = View.VISIBLE
     }
 
     fun hide() {
-        progressBar?.visibility = View.INVISIBLE
+        progressBar?.get()?.visibility = View.INVISIBLE
     }
 }
