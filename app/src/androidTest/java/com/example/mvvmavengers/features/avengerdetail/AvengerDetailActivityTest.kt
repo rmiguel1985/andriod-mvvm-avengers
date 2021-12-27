@@ -23,7 +23,7 @@ class AvengerDetailActivityTest {
     val rule = lazyActivityScenarioRule<AvengerDetailActivity>(launchActivity = false)
 
     @Test
-    fun `on intent with avenger model expected info is shown`() {
+    fun on_intent_with_avenger_model_expected_info_is_shown() {
         //Given
         val avengerName = "3-D Man"
         val avengerDescription = "Avenger"

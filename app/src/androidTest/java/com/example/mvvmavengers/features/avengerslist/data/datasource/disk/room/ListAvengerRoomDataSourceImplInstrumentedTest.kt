@@ -85,7 +85,7 @@ class ListAvengerRoomDataSourceImplInstrumentedTest {
     }
 
     @Test
-    fun `getAvengersList on empty database returns null`() = runBlockingTest {
+    fun getAvengersList_on_empty_database_returns_null() = runBlockingTest {
         //Given
         every { ConnectivityHelper.isOnline } returns (false)
 
@@ -98,7 +98,7 @@ class ListAvengerRoomDataSourceImplInstrumentedTest {
     }
 
     @Test
-    fun `getAvengersList with success data from cloud saves it`() = runBlocking {
+    fun getAvengersList_with_success_data_from_cloud_saves_it() = runBlocking {
         //Given
         every { ConnectivityHelper.isOnline } returns (true)
         mockWebServer.enqueue(
