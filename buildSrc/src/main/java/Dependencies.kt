@@ -19,7 +19,6 @@ object Versions {
     // Android Libraries
     const val appCompat = "1.4.0"
     const val coreKtx = "1.3.2"
-    const val dataStoreVersion = "1.0.0-alpha06"
     const val lifeCycleVersion = "2.2.0"
 
     // UI Libraries
@@ -27,13 +26,14 @@ object Versions {
     const val constraintLayout = "2.0.0"
 
     // Test Libraries
-    const val testRunner = "1.0.2"
     const val espressoCoreVersion = "3.4.0"
     const val junitVersion = "4.13.2"
     const val junitExtVersion = "1.1.3"
     const val mockkVersion = "1.11.0"
     const val archCoreVersion = "2.1.0"
     const val mockWebServerVersion = "4.9.0"
+    const val coreKtxTestVersion = "1.4.0"
+    const val baristaVersion = "4.2.0"
 
     // Third Party libraries
     const val leakCanaryVersion = "2.7"
@@ -65,7 +65,6 @@ object Libraries {
     const val gson = "com.google.code.gson:gson:${Versions.gsonVersion}"
     const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofitGsonVersion}"
     const val retrofitInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpVersion}"
-    const val retrofitMockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.okhttpVersion}"
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}"
 }
 
@@ -73,8 +72,6 @@ object AndroidLibraries {
     // ANDROID
     const val appCompat = "androidx.appcompat:appcompat:${Versions.appCompat}"
     const val coreKtx = "androidx.core:core-ktx:${Versions.coreKtx}"
-    const val prefDataStore = "androidx.datastore:datastore-preferences:${Versions.dataStoreVersion}"
-    const val protoDataStore = "androidx.datastore:datastore-core:${Versions.dataStoreVersion}"
 
     // UI
     const val material = "com.google.android.material:material:${Versions.material}"
@@ -92,15 +89,15 @@ object AndroidLibraries {
 }
 
 object Testlibraries {
-    const val testRunner = "com.android.support.test:runner:${Versions.testRunner}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCoreVersion}"
     const val junitTest = "junit:junit:${Versions.junitVersion}"
     const val junitExt = "androidx.test.ext:junit:${Versions.junitExtVersion}"
-    const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     const val koinTest = "io.insert-koin:koin-test:${Versions.koinVersion}"
     const val mockk = "io.mockk:mockk:${Versions.mockkVersion}"
     const val mocckAndroid = "io.mockk:mockk-android:${Versions.mockkVersion}"
     const val mockWebServer = "com.squareup.okhttp3:mockwebserver:${Versions.mockWebServerVersion}"
     const val archCore = "androidx.arch.core:core-testing:${Versions.archCoreVersion}"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesVersion}"
+    const val barista = "com.adevinta.android:barista:${Versions.baristaVersion}"
+    const val coreKtxTest = "androidx.test:core-ktx:${Versions.coreKtxTestVersion}"
 }

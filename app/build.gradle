@@ -129,8 +129,6 @@ dependencies {
     implementation AndroidLibraries.lcRuntime
     implementation AndroidLibraries.lcViewModel
     implementation AndroidLibraries.material
-    testImplementation Testlibraries.junitTest
-    androidTestImplementation 'androidx.test:core-ktx:1.2.0'
 
     // Test
     androidTestImplementation Testlibraries.junitExt
@@ -145,7 +143,13 @@ dependencies {
     testImplementation Testlibraries.mockWebServer
     testImplementation Testlibraries.archCore
     testImplementation Testlibraries.coroutines
+    testImplementation Testlibraries.junitTest
+    androidTestImplementation 'androidx.test:core-ktx:1.4.0'
+    androidTestImplementation(Testlibraries.barista) {
+        exclude group: 'org.jetbrains.kotlin'
+    }
 
+    // Timber
     implementation (Libraries.timber){
         exclude group: "org.jetbrains", module: "annotations"
     }
@@ -177,10 +181,4 @@ dependencies {
 
     // LeakCanary
     debugImplementation Libraries.leakCanary
-
-    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
-
-    androidTestImplementation('com.adevinta.android:barista:4.2.0') {
-        exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
-    }
 }
