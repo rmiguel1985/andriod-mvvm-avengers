@@ -1,4 +1,4 @@
-# MvvmAvengers [![Build Status](https://app.bitrise.io/app/ff3ca2386abcbe04/status.svg?token=tZ5t49pIDhAlmyIvLawNAw)](https://app.bitrise.io/app/ff3ca2386abcbe04)
+# MvvmAvengers [![Build Status](https://app.bitrise.io/app/ff3ca2386abcbe04/status.svg?token=tZ5t49pIDhAlmyIvLawNAw)](https://app.bitrise.io/app/ff3ca2386abcbe04) [![Coverage Status](https://coveralls.io/repos/github/rmiguel1985/andriod-mvvm-avengers/badge.svg?branch=main)](https://coveralls.io/github/rmiguel1985/andriod-mvvm-avengers?branch=main)
 
 The purpose of this repo is to create an application that tries to 
 implement Clean Architecture principles with MVVM and architecture components in Kotlin.
