@@ -29,7 +29,6 @@ object Versions {
     // Test Libraries
     const val testRunner = "1.0.2"
     const val espressoCoreVersion = "3.4.0"
-    const val kotlinTestVersion = "3.3.2"
     const val junitVersion = "4.13.2"
     const val junitExtVersion = "1.1.3"
     const val mockkVersion = "1.11.0"
@@ -95,7 +94,6 @@ object AndroidLibraries {
 object Testlibraries {
     const val testRunner = "com.android.support.test:runner:${Versions.testRunner}"
     const val espressoCore = "androidx.test.espresso:espresso-core:${Versions.espressoCoreVersion}"
-    const val kotlinTest = "io.kotlintest:kotlintest-runner-junit5:${Versions.kotlinTestVersion}"
     const val junitTest = "junit:junit:${Versions.junitVersion}"
     const val junitExt = "androidx.test.ext:junit:${Versions.junitExtVersion}"
     const val testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
