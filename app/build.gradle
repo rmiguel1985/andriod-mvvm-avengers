@@ -7,38 +7,7 @@ plugins {
     id 'kotlin-parcelize'
 }
 
-
-jacoco {
-    toolVersion = "$jacocoVersion"
-}
-
-tasks.withType(Test) {
-    jacoco.includeNoLocationClasses = true
-}
-
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
-
-    reports {
-        xml.enabled = true
-        html.enabled = true
-    }
-
-    def fileFilter = [
-            '**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*',
-            'android/**/*.*', '**/*$[0-9].*', '**/ConnectivityHelper.*', '**/Constants.*',
-            '**/PreferenceHelper.*', '**/ProgressBarHelper.*', '**/Extensions.*','**/entities/**',
-            '**/utils/**','**/ListAvengerRepositoryOnlyCloudPolicyImpl.*', '**/*Module*.*',
-            '**/ListAvengerRepositoryCacheWithCloudPolicyImpl.*', '**/BaseActivity.*','**/usecase/**',
-    ]
-    def debugTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/debug", excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/kotlin"
-
-    sourceDirectories.from(files([mainSrc]))
-    classDirectories.from(files([debugTree]))
-    executionData.from(fileTree(dir: project.buildDir, includes: [
-            'outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec', 'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'
-    ]))
-}
+apply from: 'coverage/jacoco.gradle'
 
 android {
     compileSdkVersion Versions.compileSdk
@@ -51,7 +20,7 @@ android {
         versionCode Releases.versionCode
         versionName Releases.versionName
 
-        testInstrumentationRunner Testlibraries.testInstrumentationRunner
+        testInstrumentationRunner "com.example.mvvmavengers.features.app.Runner"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -63,7 +32,7 @@ android {
         }
     }
 
-    sourceSets.test.resources.srcDirs += ["src/test"]
+    sourceSets.test.resources.srcDirs += ["src/test/resources"]
 
     buildTypes {
         debug {
@@ -208,4 +177,8 @@ dependencies {
     debugImplementation Libraries.leakCanary
 
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+
+    androidTestImplementation('com.adevinta.android:barista:4.2.0') {
+        exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
+    }
 }
