@@ -17,17 +17,17 @@ class AvengersListViewModel(
     private val loadAvengersListUseCaseImpl: LoadAvengersListUseCaseImpl
 ) : ViewModel() {
 
-    val _state: MutableLiveData<ResultAvenger<AvengersModel>> = MutableLiveData()
-    val state: LiveData<ResultAvenger<AvengersModel>> = _state
+    val _uiState: MutableLiveData<ResultAvenger<AvengersModel>> = MutableLiveData()
+    val uiState: LiveData<ResultAvenger<AvengersModel>> = _uiState
 
     init {
-        _state.postValue(ResultAvenger.Loading)
+        _uiState.postValue(ResultAvenger.Loading)
         getAvengers()
     }
 
     fun getAvengers() {
         viewModelScope.launch {
-            _state.value = loadAvengersListUseCaseImpl(params = Any())
+            _uiState.value = loadAvengersListUseCaseImpl(params = Any())
         }
     }
 }

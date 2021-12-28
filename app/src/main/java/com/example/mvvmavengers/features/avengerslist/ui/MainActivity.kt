@@ -36,21 +36,21 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
         createAvengersListAdapter()
-        mainViewModel.state.observe(this, {
-            manageState(it)
+        mainViewModel.uiState.observe(this, { uiState ->
+            manageState(uiState)
         })
     }
 
-    private fun manageState(resultAvenger: ResultAvenger<AvengersModel?>?) {
-        when (resultAvenger) {
+    private fun manageState(uiState: ResultAvenger<AvengersModel?>?) {
+        when (uiState) {
             is ResultAvenger.Success -> {
                 hideProgress()
-                resultAvenger.data?.data?.results?.let { avengersList -> adapter.avengers = avengersList }
+                uiState.data?.data?.results?.let { avengersList -> adapter.avengers = avengersList }
             }
 
             is ResultAvenger.Error -> {
                 hideProgress()
-                showError(resultAvenger.exception.toString())
+                showError(uiState.exception.toString())
             }
 
             is ResultAvenger.Loading -> {

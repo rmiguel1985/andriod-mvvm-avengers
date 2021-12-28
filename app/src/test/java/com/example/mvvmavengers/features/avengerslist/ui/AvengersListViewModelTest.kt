@@ -45,7 +45,7 @@ class AvengersListViewModelTest {
         lifeCycleTestOwner = LifeCycleTestOwner()
         lifeCycleTestOwner.onCreate()
         avengersListViewModel = AvengersListViewModel(LoadAvengersListUseCaseImpl(loadAvengersRepository))
-        avengersListViewModel._state.observe(lifeCycleTestOwner, stateObserver)
+        avengersListViewModel._uiState.observe(lifeCycleTestOwner, stateObserver)
     }
 
     @After
