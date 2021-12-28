@@ -36,6 +36,11 @@ class MainActivity : BaseActivity() {
         setContentView(binding.root)
 
         createAvengersListAdapter()
+
+        binding.swipeContainer.setOnRefreshListener {
+            mainViewModel.getAvengers()
+        }
+
         mainViewModel.uiState.observe(this, { uiState ->
             manageState(uiState)
         })
@@ -45,11 +50,13 @@ class MainActivity : BaseActivity() {
         when (uiState) {
             is ResultAvenger.Success -> {
                 hideProgress()
+                if (binding.swipeContainer.isRefreshing) binding.swipeContainer.isRefreshing = false
                 uiState.data?.data?.results?.let { avengersList -> adapter.avengers = avengersList }
             }
 
             is ResultAvenger.Error -> {
                 hideProgress()
+                if (binding.swipeContainer.isRefreshing) binding.swipeContainer.isRefreshing = false
                 showError(uiState.exception.toString())
             }
 

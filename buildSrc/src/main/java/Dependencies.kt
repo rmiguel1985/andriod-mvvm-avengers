@@ -24,6 +24,7 @@ object Versions {
     // UI Libraries
     const val material = "1.3.0-rc01"
     const val constraintLayout = "2.0.0"
+    const val swipeToRefreshLayout = "1.1.0"
 
     // Test Libraries
     const val espressoCoreVersion = "3.4.0"
@@ -76,6 +77,7 @@ object AndroidLibraries {
     // UI
     const val material = "com.google.android.material:material:${Versions.material}"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}"
+    const val swipeToRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:${Versions.swipeToRefreshLayout}"
 
     // Lifecycle components
     const val lcLivedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifeCycleVersion}"

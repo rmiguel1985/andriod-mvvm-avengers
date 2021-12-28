@@ -125,6 +125,7 @@ dependencies {
     implementation AndroidLibraries.appCompat
     implementation AndroidLibraries.coreKtx
     implementation AndroidLibraries.constraintLayout
+    implementation AndroidLibraries.swipeToRefreshLayout
     implementation AndroidLibraries.lcLivedata
     implementation AndroidLibraries.lcRuntime
     implementation AndroidLibraries.lcViewModel
