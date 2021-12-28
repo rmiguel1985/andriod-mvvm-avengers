@@ -1,0 +1,3 @@
+coverallsJacoco {
+    reportPath = "${buildDir}/reports/jacoco/jacocoTestReport/jacocoTestReport.xml"
+}

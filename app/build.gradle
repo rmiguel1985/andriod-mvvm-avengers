@@ -5,8 +5,10 @@ plugins {
     id 'jacoco'
     id 'org.jetbrains.dokka-android'
     id 'kotlin-parcelize'
+    id 'com.github.nbaztec.coveralls-jacoco'
 }
 
+apply from: 'coverage/coveralls.gradle'
 apply from: 'coverage/jacoco.gradle'
 
 android {

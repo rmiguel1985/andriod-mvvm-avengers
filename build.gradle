@@ -2,7 +2,8 @@
 buildscript {
     ext.jacocoVersion = '0.8.7'
     ext.dokkaVersion = '0.9.17'
-    ext.detekt_version = '1.19.0'
+    ext.detektVersion = '1.19.0'
+    ext.coverallsVersion = '1.2.13'
     repositories {
         google()
         mavenCentral()
@@ -12,9 +13,10 @@ buildscript {
         classpath "com.android.tools.build:gradle:$Versions.gradle"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$Versions.kotlin"
         classpath "com.github.ben-manes:gradle-versions-plugin:0.36.0"
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion"
         classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
         classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokkaVersion"
+        classpath "com.github.nbaztec:coveralls-jacoco-gradle-plugin:$coverallsVersion"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -29,7 +31,7 @@ allprojects {
     apply from: "$rootDir/detekt.gradle"
 
     dependencies {
-        detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$detekt_version"
+        detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:$detektVersion"
     }
 
     repositories {
