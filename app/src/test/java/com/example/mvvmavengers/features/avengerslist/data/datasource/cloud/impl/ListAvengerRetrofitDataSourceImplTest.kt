@@ -103,6 +103,19 @@ class ListAvengerRetrofitDataSourceImplTest {
         assertEquals(avengersList.errorMessage, "not found")
     }
 
+    @Test
+    fun `getAvengersList with cloud on unsuccessful response with http exception`() = runBlocking {
+        // Given
+        mockWebServer.enqueue(MockResponse().setResponseCode(500).setBody("code:'500'"))
+
+        // When
+        val avengersList = listAvengerRetrofitDataSourceImpl.getAvengersList()
+
+        // Then
+        assertTrue(avengersList is ResultAvenger.Error)
+        assertEquals(avengersList.errorMessage, "HTTP 500 Server Error")
+    }
+
     /**
      * Read file from assets
      *

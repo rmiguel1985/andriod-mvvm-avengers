@@ -75,9 +75,10 @@ class IntegrationTest {
 
     @Before
     fun before() {
+        context = InstrumentationRegistry.getInstrumentation().context
+        initMockWebServer()
         createDataLayerDependencies()
         loadKoinModule()
-        initMockWebServer()
 
         every { ConnectivityHelper.isOnline } returns (true)
         scenario = launchActivity()
@@ -91,7 +92,6 @@ class IntegrationTest {
 
     private fun createDataLayerDependencies() {
         gson = Gson()
-        context = InstrumentationRegistry.getInstrumentation().context
         val transactionQueryExecutor = Dispatchers.IO.asExecutor()
         appDatabase = Room.inMemoryDatabaseBuilder(
             context!!,
