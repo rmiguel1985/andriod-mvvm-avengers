@@ -15,9 +15,7 @@ import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import androidx.test.platform.app.InstrumentationRegistry
 import com.adevinta.android.barista.assertion.BaristaListAssertions
 import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions
-import com.adevinta.android.barista.interaction.BaristaClickInteractions.clickBack
 import com.adevinta.android.barista.interaction.BaristaListInteractions
-import com.adevinta.android.barista.interaction.BaristaSwipeRefreshInteractions.refresh
 import com.example.mvvmavengers.R
 import com.example.mvvmavengers.features.avengerslist.data.datasource.cloud.impl.ListAvengerRetrofitDataSourceImpl
 import com.example.mvvmavengers.features.avengerslist.data.datasource.disk.ListAvengerDiskDataSource
@@ -154,14 +152,6 @@ class IntegrationTest {
             .check(matches(withText(expectedAvengerDescription)))
         onView(withId(R.id.detail_date))
             .check(matches(withText(expectedAvengerLastModified)))
-
-        clickBack()
-        every { ConnectivityHelper.isOnline } returns (false)
-        refresh()
-
-        BaristaListAssertions.assertListNotEmpty(R.id.avenger_list_recyclerview)
-        BaristaRecyclerViewAssertions.assertRecyclerViewItemCount(R.id.avenger_list_recyclerview, 2)
-        BaristaListAssertions.assertDisplayedAtPosition(R.id.avenger_list_recyclerview, 0, expectedAvengerName)
     }
 
     /**
