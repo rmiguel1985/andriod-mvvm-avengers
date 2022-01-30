@@ -4,10 +4,14 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.mvvmavengers.base.usecase.ResultAvenger
 import com.example.mvvmavengers.base.usecase.data
 import com.example.mvvmavengers.base.usecase.errorMessage
-import com.google.gson.Gson
+import com.example.mvvmavengers.base.usecase.exception
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import junit.framework.TestCase.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -17,10 +21,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 import java.io.InputStream
 
+@ExperimentalSerializationApi
 @ExperimentalCoroutinesApi
 class ListAvengerRetrofitDataSourceImplTest {
 
@@ -29,15 +33,13 @@ class ListAvengerRetrofitDataSourceImplTest {
 
     private lateinit var mockWebServer: MockWebServer
     private lateinit var listAvengerRetrofitDataSourceImpl: ListAvengerRetrofitDataSourceImpl
-    private lateinit var gson: Gson
 
     @Before
     fun setUp() {
         mockWebServer = MockWebServer()
         mockWebServer.start()
-        gson = Gson()
         listAvengerRetrofitDataSourceImpl =
-                ListAvengerRetrofitDataSourceImpl(createRetrofitInstance(gson))
+            ListAvengerRetrofitDataSourceImpl(createRetrofitInstance())
     }
 
     @After
@@ -45,12 +47,15 @@ class ListAvengerRetrofitDataSourceImplTest {
         mockWebServer.shutdown()
     }
 
-    private fun createRetrofitInstance(gson: Gson): Retrofit {
+    private fun createRetrofitInstance(): Retrofit {
+        val contentType = "application/json".toMediaType()
+        val converterFactory = Json.asConverterFactory(contentType)
+
         return Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(mockWebServer.url("/"))
-                .client(OkHttpClient.Builder().build())
-                .build()
+            .addConverterFactory(converterFactory)
+            .baseUrl(mockWebServer.url("/"))
+            .client(OkHttpClient.Builder().build())
+            .build()
     }
 
     @Test
@@ -87,7 +92,7 @@ class ListAvengerRetrofitDataSourceImplTest {
 
         // Then
         assertTrue(avengersList is ResultAvenger.Error)
-        assertEquals(avengersList.errorMessage, "not found")
+        assertTrue(avengersList.exception is IllegalArgumentException)
     }
 
     @Test

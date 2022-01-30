@@ -28,13 +28,16 @@ import com.example.mvvmavengers.features.avengerslist.domain.LoadAvengersListUse
 import com.example.mvvmavengers.features.avengerslist.ui.AvengersListViewModel
 import com.example.mvvmavengers.features.avengerslist.ui.MainActivity
 import com.example.mvvmavengers.utils.ConnectivityHelper
-import com.google.gson.Gson
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import io.mockk.every
 import io.mockk.mockkObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.asExecutor
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -48,9 +51,9 @@ import org.koin.core.context.unloadKoinModules
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
+@ExperimentalSerializationApi
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 @LargeTest
@@ -69,7 +72,6 @@ class IntegrationTest {
     private lateinit var cloudWithCachePolicyImpl: ListAvengerRepositoryPolicy
     private lateinit var mockWebServer: MockWebServer
     private lateinit var listAvengerRetrofitDataSourceImpl: ListAvengerRetrofitDataSourceImpl
-    private lateinit var gson: Gson
 
     @Before
     fun before() {
@@ -89,7 +91,6 @@ class IntegrationTest {
     }
 
     private fun createDataLayerDependencies() {
-        gson = Gson()
         val transactionQueryExecutor = Dispatchers.IO.asExecutor()
         appDatabase = Room.inMemoryDatabaseBuilder(
             context!!,
@@ -100,7 +101,7 @@ class IntegrationTest {
         mockkObject(ConnectivityHelper)
 
         listAvengerRetrofitDataSourceImpl =
-            ListAvengerRetrofitDataSourceImpl(createRetrofitInstance(gson))
+            ListAvengerRetrofitDataSourceImpl(createRetrofitInstance())
         cloudWithCachePolicyImpl =
             ListAvengerRepositoryCloudWithCachePolicyImpl(
                 listAvengerRetrofitDataSourceImpl,
@@ -127,9 +128,12 @@ class IntegrationTest {
         )
     }
 
-    private fun createRetrofitInstance(gson: Gson): Retrofit {
+    private fun createRetrofitInstance(): Retrofit {
+        val contentType = "application/json".toMediaType()
+        val converterFactory = Json.asConverterFactory(contentType)
+
         return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(converterFactory)
             .baseUrl(mockWebServer.url("/"))
             .client(OkHttpClient.Builder().build())
             .build()

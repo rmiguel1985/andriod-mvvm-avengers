@@ -13,13 +13,16 @@ import com.example.mvvmavengers.features.avengerslist.data.datasource.disk.room.
 import com.example.mvvmavengers.features.avengerslist.data.policy.ListAvengerRepositoryPolicy
 import com.example.mvvmavengers.features.avengerslist.data.policy.impl.ListAvengerRepositoryCloudWithCachePolicyImpl
 import com.example.mvvmavengers.utils.ConnectivityHelper
-import com.google.gson.Gson
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import io.mockk.every
 import io.mockk.mockkObject
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runBlockingTest
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -28,7 +31,6 @@ import org.junit.Assert.assertFalse
 import org.junit.runner.RunWith
 import org.junit.runners.MethodSorters
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
 /**
@@ -36,6 +38,7 @@ import java.io.IOException
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+@ExperimentalSerializationApi
 @ExperimentalCoroutinesApi
 @RunWith(AndroidJUnit4ClassRunner::class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -50,11 +53,9 @@ class ListAvengerRoomDataSourceImplInstrumentedTest {
     private lateinit var cloudWithCachePolicyImpl: ListAvengerRepositoryPolicy
     private lateinit var mockWebServer: MockWebServer
     private lateinit var listAvengerRetrofitDataSourceImpl: ListAvengerRetrofitDataSourceImpl
-    private lateinit var gson: Gson
 
     @Before
     fun setUp() {
-        gson = Gson()
         mockWebServer = MockWebServer()
         mockWebServer.start()
         context = InstrumentationRegistry.getInstrumentation().context
@@ -64,18 +65,23 @@ class ListAvengerRoomDataSourceImplInstrumentedTest {
         mockkObject(ConnectivityHelper)
 
         listAvengerRetrofitDataSourceImpl =
-                ListAvengerRetrofitDataSourceImpl(createRetrofitInstance(gson))
+            ListAvengerRetrofitDataSourceImpl(createRetrofitInstance())
         cloudWithCachePolicyImpl =
-                ListAvengerRepositoryCloudWithCachePolicyImpl(listAvengerRetrofitDataSourceImpl,
-                        roomDiskDataSource )
+            ListAvengerRepositoryCloudWithCachePolicyImpl(
+                listAvengerRetrofitDataSourceImpl,
+                roomDiskDataSource
+            )
     }
 
-    private fun createRetrofitInstance(gson: Gson): Retrofit {
+    private fun createRetrofitInstance(): Retrofit {
+        val contentType = "application/json".toMediaType()
+        val converterFactory = Json.asConverterFactory(contentType)
+
         return Retrofit.Builder()
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(mockWebServer.url("/"))
-                .client(OkHttpClient.Builder().build())
-                .build()
+            .addConverterFactory(converterFactory)
+            .baseUrl(mockWebServer.url("/"))
+            .client(OkHttpClient.Builder().build())
+            .build()
     }
 
     @After
