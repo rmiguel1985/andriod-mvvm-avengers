@@ -6,6 +6,7 @@ plugins {
     id 'org.jetbrains.dokka-android'
     id 'kotlin-parcelize'
     id 'com.github.nbaztec.coveralls-jacoco'
+    id 'kotlinx-serialization'
 }
 
 apply from: 'coverage/coveralls.gradle'
@@ -145,7 +146,7 @@ dependencies {
     testImplementation Testlibraries.archCore
     testImplementation Testlibraries.coroutines
     testImplementation Testlibraries.junitTest
-    androidTestImplementation 'androidx.test:core-ktx:1.4.0'
+    androidTestImplementation Testlibraries.androidxTestCoreKtx
     androidTestImplementation(Testlibraries.barista) {
         exclude group: 'org.jetbrains.kotlin'
     }
@@ -170,10 +171,10 @@ dependencies {
     implementation Libraries.koinAndroid
 
     // Retrofit
-    implementation Libraries.gson
-    implementation Libraries.retrofitGsonConverter
     implementation Libraries.retrofit
     implementation Libraries.retrofitInterceptor
+    implementation Libraries.retrofitKotlinxSerializationConverter
+    implementation Libraries.kotlinxSerialization
 
     // Room
     implementation AndroidLibraries.room

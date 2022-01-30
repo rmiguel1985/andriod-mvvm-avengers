@@ -1,4 +1,3 @@
-
 object ApplicationId {
     const val id = "com.example.mvvmavengers"
 }
@@ -9,21 +8,21 @@ object Releases {
 }
 
 object Versions {
-    const val kotlin = "1.4.21"
-    const val gradle = "7.0.4"
+    const val kotlin = "1.5.31"
+    const val gradle = "7.1.0"
     const val compileSdk = 31
-    const val buildTools = "30.0.2"
+    const val buildTools = "30.0.3"
     const val minSdk = 23
     const val targetSdk = 31
 
     // Android Libraries
-    const val appCompat = "1.4.0"
+    const val appCompat = "1.4.1"
     const val coreKtx = "1.3.2"
     const val lifeCycleVersion = "2.2.0"
 
     // UI Libraries
     const val material = "1.3.0-rc01"
-    const val constraintLayout = "2.0.0"
+    const val constraintLayout = "2.1.3"
     const val swipeToRefreshLayout = "1.1.0"
 
     // Test Libraries
@@ -35,19 +34,20 @@ object Versions {
     const val mockWebServerVersion = "4.9.0"
     const val coreKtxTestVersion = "1.4.0"
     const val baristaVersion = "4.2.0"
+    const val androidxTestCoreKtxVersion = "1.4.0"
 
     // Third Party libraries
-    const val leakCanaryVersion = "2.7"
-    const val timberVersion = "4.7.1"
+    const val leakCanaryVersion = "2.8.1"
+    const val timberVersion = "5.0.1"
     const val glideVersion = "4.12.0"
-    const val startupRuntime = "1.0.0"
-    const val koinVersion = "3.1.4"
+    const val startupRuntime = "1.1.0"
+    const val koinVersion = "3.1.5"
     const val coroutinesVersion = "1.4.2"
-    const val roomVersion = "2.2.6"
-    const val gsonVersion = "2.8.8"
-    const val retrofitGsonVersion = "2.9.0"
+    const val roomVersion = "2.4.0"
     const val retrofitVersion = "2.9.0"
     const val okhttpVersion = "4.9.0"
+    const val retrofitSerializationConverterVersion = "0.8.0"
+    const val kotlinSerialization = "1.3.2"
 }
 
 object KotlinLibraries {
@@ -63,10 +63,11 @@ object Libraries {
     const val koinAndroid = "io.insert-koin:koin-android:${Versions.koinVersion}"
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutinesVersion}"
     const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutinesVersion}"
-    const val gson = "com.google.code.gson:gson:${Versions.gsonVersion}"
-    const val retrofitGsonConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofitGsonVersion}"
     const val retrofitInterceptor = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttpVersion}"
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofitVersion}"
+    const val retrofitKotlinxSerializationConverter =
+        "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:${Versions.retrofitSerializationConverterVersion}"
+    const val kotlinxSerialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.kotlinSerialization}"
 }
 
 object AndroidLibraries {
@@ -102,4 +103,5 @@ object Testlibraries {
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesVersion}"
     const val barista = "com.adevinta.android:barista:${Versions.baristaVersion}"
     const val coreKtxTest = "androidx.test:core-ktx:${Versions.coreKtxTestVersion}"
+    const val androidxTestCoreKtx = "androidx.test:core-ktx:${Versions.androidxTestCoreKtxVersion}"
 }
