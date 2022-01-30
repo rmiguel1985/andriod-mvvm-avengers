@@ -63,6 +63,9 @@ class MainActivity : BaseActivity() {
             is ResultAvenger.Loading -> {
                 showProgress()
             }
+            else -> {
+                hideProgress()
+            }
         }
     }
 

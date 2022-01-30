@@ -15,7 +15,7 @@ Libraries
 * [JetPak Lifecycle][3]
 * [Koin][4]
 * [Retrofit][5]
-* [Gson][6]
+* [kotlinx.serialization][6]
 * [OkHttp][7]
 * [Coroutines][8]
 * [Room Persistence Library][9]
@@ -33,8 +33,11 @@ Libraries
 [2]: https://github.com/bumptech/glide
 [3]: https://developer.android.com/jetpack/androidx/releases/lifecycle
 [4]: https://insert-koin.io/
+
 [5]: https://github.com/square/retrofit
-[6]: https://github.com/google/gson
+
+[6]: https://github.com/Kotlin/kotlinx.serialization
+
 [7]: https://github.com/square/okhttp
 [8]: https://github.com/Kotlin/kotlinx.coroutines
 [9]: https://developer.android.com/topic/libraries/architecture/room

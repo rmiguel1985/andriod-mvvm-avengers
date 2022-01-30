@@ -2,11 +2,10 @@ package com.example.mvvmavengers.initializer
 
 import android.content.Context
 import androidx.startup.Initializer
-import com.example.mvvmavengers.base.koin.koin.MainModule
+import com.example.mvvmavengers.base.koin.MainModule
 import com.example.mvvmavengers.features.avengerslist.koin.avengersListMainModule
 import kotlinx.coroutines.InternalCoroutinesApi
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import timber.log.Timber
@@ -20,7 +19,6 @@ class KoinInitializer : Initializer<Unit> {
         koinModules.addAll(avengersListMainModule)
 
         startKoin {
-            androidLogger()
             androidContext(context)
             modules(koinModules)
         }

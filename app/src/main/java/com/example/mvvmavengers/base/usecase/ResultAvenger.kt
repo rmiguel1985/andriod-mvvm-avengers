@@ -26,3 +26,6 @@ val <T> ResultAvenger<T>.data: T?
 
 val <Exception> ResultAvenger<Exception>.errorMessage: String?
     get() = (this as? ResultAvenger.Error)?.exception?.message
+
+val <Exception> ResultAvenger<Exception>.exception: java.lang.Exception?
+    get() = (this as? ResultAvenger.Error)?.exception
