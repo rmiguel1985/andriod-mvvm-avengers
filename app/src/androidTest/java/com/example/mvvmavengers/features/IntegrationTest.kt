@@ -16,6 +16,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.adevinta.android.barista.assertion.BaristaListAssertions
 import com.adevinta.android.barista.assertion.BaristaRecyclerViewAssertions
 import com.adevinta.android.barista.interaction.BaristaListInteractions
+import com.adevinta.android.barista.interaction.BaristaSleepInteractions.sleep
 import com.example.mvvmavengers.R
 import com.example.mvvmavengers.features.avengerslist.data.datasource.cloud.impl.ListAvengerRetrofitDataSourceImpl
 import com.example.mvvmavengers.features.avengerslist.data.datasource.disk.ListAvengerDiskDataSource
@@ -144,6 +145,9 @@ class IntegrationTest {
         val expectedAvengerName = "3-D Man"
         val expectedAvengerLastModified = "2014-04-29T14:18:17-0400"
         val expectedAvengerDescription = "Description"
+
+        // tricky solution for CI
+        sleep(2000)
 
         BaristaListAssertions.assertListNotEmpty(R.id.avenger_list_recyclerview)
         BaristaRecyclerViewAssertions.assertRecyclerViewItemCount(R.id.avenger_list_recyclerview, 2)
