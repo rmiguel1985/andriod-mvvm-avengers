@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.jacocoVersion = '0.8.7'
-    ext.dokkaVersion = '0.9.17'
+    ext.dokkaVersion = '1.6.10'
     ext.detektVersion = '1.19.0'
     ext.coverallsVersion = '1.2.13'
     repositories {
@@ -16,7 +16,7 @@ buildscript {
         classpath "com.github.ben-manes:gradle-versions-plugin:0.36.0"
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion"
         classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
-        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokkaVersion"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
         classpath "com.github.nbaztec:coveralls-jacoco-gradle-plugin:$coverallsVersion"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

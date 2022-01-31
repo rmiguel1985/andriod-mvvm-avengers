@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'jacoco'
-    id 'org.jetbrains.dokka-android'
+    id 'org.jetbrains.dokka'
     id 'kotlin-parcelize'
     id 'com.github.nbaztec.coveralls-jacoco'
     id 'kotlinx-serialization'
@@ -88,8 +88,13 @@ android {
         freeCompilerArgs += ["-Xallow-jvm-ir-dependencies", "-Xskip-prerelease-check"]
     }
 
-    dokka {
-        outputFormat = 'html'
+    dokkaHtml.configure {
+        outputDirectory.set(file("$buildDir/docs"))
+        dokkaSourceSets {
+            named("main") {
+                noAndroidSdkLink.set(false)
+            }
+        }
     }
 
     sourceSets {
